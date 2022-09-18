@@ -1,4 +1,4 @@
-
+import csv
 #Following freeCodeCamp.org Tutorial
 #Basic Class Definition
 class cloudprovider:
@@ -36,17 +36,22 @@ class cloudprovider:
     def apply_discount(self):
         self.subprice=self.subprice*self.discount_rate
         return("new price ="+str(self.subprice))
+    @classmethod    
+    def instantiate_csv(cls):
+        with open('providers.csv','r') as f:
+            reader= csv.DictReader(f)
+            items = list(reader)
+
+        for item in items:
+            cloudprovider(item.get('name'),item.get('user'),item.get('pass'),item.get('pricing'),)  # type: ignore
 
     #python doc : best practice for representation
     def __repr__(self) -> str:
         return f"Cloud('{self.name}','{self.subprice}')"
 
 
-cloud1=cloudprovider("Azure","b","c",100)
-cloud2=cloudprovider("AWS","b","c",100)
-cloud3=cloudprovider("ALIBABA","b","c",100)
-cloud4=cloudprovider("DigitalOcean","b","c",100)
-cloud5=cloudprovider("Heroku","b","c",100)
+
+
+cloudprovider.instantiate_csv()
 
 print(cloudprovider.all)
-
