@@ -4,6 +4,7 @@
 class cloudprovider:
     #Class Attribute
     discount_rate=0.8
+    all=[]
 
     def __init__(self,name: str,user="",passwd="",subprice:float=0):
 
@@ -17,7 +18,10 @@ class cloudprovider:
         self.user=user
         self.passwd=passwd
         self.subprice=subprice
-        print("cloud provider object instance created")
+        #print("cloud provider object instance created")
+
+        #Actions 
+        cloudprovider.all.append(self)
 
     def check_name_set(self):
         if(self.name==""):
@@ -30,14 +34,19 @@ class cloudprovider:
         else :
             return("Free Tier")
     def apply_discount(self):
-        self.subprice=self.subprice*cloudprovider.discount_rate
+        self.subprice=self.subprice*self.discount_rate
         return("new price ="+str(self.subprice))
 
+    #python doc : best practice for representation
+    def __repr__(self) -> str:
+        return f"Cloud('{self.name}','{self.subprice}')"
 
-cloud1=cloudprovider("a","b","c",30)
 
-#print(cloudprovider.__dict__) #get class att dictionary 
-#print(cloud1.__dict__)      #get instance att dicitionary 
-print(cloud1.subprice)
-cloud1.apply_discount()
-print(cloud1.subprice)
+cloud1=cloudprovider("Azure","b","c",100)
+cloud2=cloudprovider("AWS","b","c",100)
+cloud3=cloudprovider("ALIBABA","b","c",100)
+cloud4=cloudprovider("DigitalOcean","b","c",100)
+cloud5=cloudprovider("Heroku","b","c",100)
+
+print(cloudprovider.all)
+
